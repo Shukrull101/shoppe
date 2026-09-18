@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Layout from './layout/layout';
 import { AccountProvider, AccountPage, ForgotPasswordPage } from './account';
+import { ShopPage } from './shop';
 
 export default function App() {
   return (
@@ -41,6 +42,9 @@ export default function App() {
                 </div>
               } 
             />
+
+            {/* Страница магазина */}
+            <Route path="shop" element={<ShopPage />} />
 
             {/* Аккаунтная система и личный кабинет (наша часть) */}
             <Route path="profile" element={<AccountPage />} />
