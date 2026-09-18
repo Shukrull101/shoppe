@@ -19,8 +19,8 @@ const EyeIcon = () => (
     <circle cx="12" cy="12" r="3"></circle>
   </svg>
 );
-const HeartIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+const HeartIcon = ({ filled }) => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill={filled ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.5">
     <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
   </svg>
 );
@@ -34,6 +34,12 @@ const carouselItems = [
 
 export function HomePage() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [likedItems, setLikedItems] = useState({});
+
+  const toggleLike = (e, id) => {
+    e.preventDefault(); // Останавливаем переход по ссылке (Link)
+    setLikedItems(prev => ({ ...prev, [id]: !prev[id] }));
+  };
 
   // Автопрокрутка карусели
   useEffect(() => {
@@ -66,9 +72,12 @@ export function HomePage() {
             <div className="relative z-10 text-white max-w-sm">
               <h2 className="text-4xl md:text-5xl font-medium mb-4 drop-shadow-md">{carouselItems[currentSlide].title}</h2>
               <p className="text-xl md:text-2xl mb-8 drop-shadow-md">{carouselItems[currentSlide].price}</p>
-              <button className="border border-white px-8 py-3 rounded-sm text-sm uppercase tracking-wider hover:bg-white hover:text-black transition-colors backdrop-blur-sm bg-black/10">
+              <Link 
+                to={`/shop/${carouselItems[currentSlide].id}`}
+                className="inline-block border border-white px-8 py-3 rounded-sm text-sm uppercase tracking-wider hover:bg-white hover:text-black transition-colors backdrop-blur-sm bg-black/10"
+              >
                 View Product
-              </button>
+              </Link>
             </div>
           </motion.div>
         </AnimatePresence>
@@ -97,9 +106,10 @@ export function HomePage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-12">
           {products.slice(0, 6).map((product, index) => (
-            <div
+            <Link
+              to={`/shop/${product.id}`}
               key={product.id}
-              className="group cursor-pointer animate-fade-in-up"
+              className="group cursor-pointer block animate-fade-in-up"
               style={{ animationDelay: `${0.15 + index * 0.05}s` }}
             >
               {/* Image Container */}
@@ -129,8 +139,11 @@ export function HomePage() {
                   <button className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-black hover:bg-black hover:text-white transition-colors shadow-md transform translate-y-4 group-hover:translate-y-0 duration-300 delay-100">
                     <EyeIcon />
                   </button>
-                  <button className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-black hover:bg-black hover:text-white transition-colors shadow-md transform translate-y-4 group-hover:translate-y-0 duration-300 delay-150">
-                    <HeartIcon />
+                  <button 
+                    onClick={(e) => toggleLike(e, product.id)}
+                    className={`w-10 h-10 bg-white rounded-full flex items-center justify-center transition-colors shadow-md transform translate-y-4 group-hover:translate-y-0 duration-300 delay-150 ${likedItems[product.id] ? 'text-red-500' : 'text-black hover:bg-black hover:text-white'}`}
+                  >
+                    <HeartIcon filled={likedItems[product.id]} />
                   </button>
                 </div>
 
@@ -143,7 +156,7 @@ export function HomePage() {
               <p className="text-[#A18A68] font-medium">
                 {product.price}
               </p>
-            </div>
+            </Link>
           ))}
         </div>
       </section>

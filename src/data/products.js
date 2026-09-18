@@ -13,6 +13,22 @@ export const products = [
     badge: '- %21',
     badgeColor: 'bg-[#A18A68] text-white',
     image: img1,
+    reviews: [
+      {
+        id: 1,
+        author: 'Scarlet withch',
+        date: '6 May, 2020',
+        rating: 3,
+        text: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet.'
+      },
+      {
+        id: 2,
+        author: 'Scarlet withch',
+        date: '6 May, 2020',
+        rating: 3,
+        text: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam placerat.'
+      }
+    ]
   },
   {
     id: 2,
