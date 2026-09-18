@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { products } from '../data/products';
+import { useCart } from '../cart';
 
 // SVG Иконки
 const StarIcon = ({ filled }) => (
@@ -46,6 +47,7 @@ const TwitterIcon = () => (
 export function ProductPage() {
   const { id } = useParams();
   const product = products.find(p => p.id === parseInt(id));
+  const { addToCart } = useCart();
   
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState('description');
@@ -181,7 +183,10 @@ export function ProductPage() {
                   className="w-10 h-12 flex items-center justify-center text-gray-500 hover:text-black hover:bg-gray-50 transition-colors"
                 >+</button>
               </div>
-              <button className="flex-1 bg-white border border-black text-black h-12 text-sm uppercase tracking-wider font-medium hover:bg-black hover:text-white transition-colors rounded-sm">
+              <button 
+                onClick={() => addToCart(product, quantity)}
+                className="flex-1 bg-white border border-black text-black h-12 text-sm uppercase tracking-wider font-medium hover:bg-black hover:text-white transition-colors rounded-sm"
+              >
                 Add to cart
               </button>
             </div>

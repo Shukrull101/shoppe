@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './header.module.css';
+import { useCart } from '../cart';
 
 // Импорт иконок и логотипа
 import logoImg from '../assets/shukrullo/SHOPPE.png';
@@ -9,6 +10,8 @@ import cartIcon from '../assets/shukrullo/cart.png';
 import profileIcon from '../assets/shukrullo/profile.png';
 
 export default function Header() {
+  const { toggleCart, cartCount } = useCart();
+
   return (
     <header className={styles.header}>
       <div className={styles.container}>
@@ -33,9 +36,14 @@ export default function Header() {
             <button className={styles.iconBtn} aria-label="Search">
               <img src={searchIcon} alt="Search" />
             </button>
-            <Link to="/cart" className={styles.iconBtn} aria-label="Cart">
+            <button onClick={toggleCart} className={styles.iconBtn} style={{ position: 'relative' }} aria-label="Cart">
               <img src={cartIcon} alt="Cart" />
-            </Link>
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-2 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full z-10" style={{ transform: 'scale(0.8)' }}>
+                  {cartCount}
+                </span>
+              )}
+            </button>
             <Link to="/profile" className={styles.iconBtn} aria-label="Profile">
               <img src={profileIcon} alt="Profile" />
             </Link>

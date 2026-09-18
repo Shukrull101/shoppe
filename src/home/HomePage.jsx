@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { products } from '../data/products';
+import { useCart } from '../cart';
 import carouselImg1 from '../assets/shop/Img_01_carousel.png';
 import carouselImg2 from '../assets/shop/Img_02_carousel.png';
 import carouselImg3 from '../assets/shop/Img_03_carousel.png';
@@ -35,6 +36,7 @@ const carouselItems = [
 export function HomePage() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [likedItems, setLikedItems] = useState({});
+  const { addToCart } = useCart();
 
   const toggleLike = (e, id) => {
     e.preventDefault(); // Останавливаем переход по ссылке (Link)
@@ -133,8 +135,11 @@ export function HomePage() {
 
                 {/* Hover Overlay - Размытие и иконки */}
                 <div className="absolute inset-0 bg-white/50 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-4 z-10">
-                  <button className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-black hover:bg-black hover:text-white transition-colors shadow-md transform translate-y-4 group-hover:translate-y-0 duration-300 delay-75">
-                    <CartIcon />
+                  <button 
+                    onClick={(e) => { e.preventDefault(); addToCart(product, 1); }}
+                    className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-black hover:bg-black hover:text-white transition-colors shadow-md transform translate-y-4 group-hover:translate-y-0 duration-300 delay-75"
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
                   </button>
                   <button className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-black hover:bg-black hover:text-white transition-colors shadow-md transform translate-y-4 group-hover:translate-y-0 duration-300 delay-100">
                     <EyeIcon />
