@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Layout from './layout/layout';
 import { AccountProvider, AccountPage, ForgotPasswordPage } from './account';
 import { ShopPage } from './shop';
+import { HomePage } from './home';
 
 export default function App() {
   return (
@@ -12,36 +13,8 @@ export default function App() {
           {/* Главный Layout объединяет шапку и футер (не изменяются) */}
           <Route path="/" element={<Layout />}>
             {/* Главная страница с навигационной карточкой к аккаунту */}
-            <Route 
-              index 
-              element={
-                <div style={{ padding: '60px 20px', textAlign: 'center', minHeight: '50vh' }}>
-                  <h1 style={{ fontSize: '32px', marginBottom: '16px' }}>Добро пожаловать в Shoppe!</h1>
-                  <p style={{ color: '#707070', marginBottom: '24px' }}>
-                    Шапка и футер успешно подключены через макет.
-                  </p>
-                  <div style={{ display: 'flex', gap: '16px', justifyContent: 'center' }}>
-                    <Link
-                      to="/profile"
-                      style={{
-                        backgroundColor: '#000000',
-                        color: '#ffffff',
-                        padding: '12px 28px',
-                        textDecoration: 'none',
-                        fontSize: '14px',
-                        letterSpacing: '1px',
-                        fontWeight: 500,
-                        textTransform: 'uppercase',
-                        borderRadius: '2px',
-                        display: 'inline-block',
-                      }}
-                    >
-                      Личный кабинет / Авторизация
-                    </Link>
-                  </div>
-                </div>
-              } 
-            />
+            {/* Главная страница */}
+            <Route index element={<HomePage />} />
 
             {/* Страница магазина */}
             <Route path="shop" element={<ShopPage />} />
