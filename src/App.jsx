@@ -4,6 +4,7 @@ import Layout from './layout/layout';
 import { AccountProvider, AccountPage, ForgotPasswordPage } from './account';
 import { ShopPage } from './shop';
 import { HomePage } from './home';
+import { ProductPage } from './product';
 
 export default function App() {
   return (
@@ -18,6 +19,9 @@ export default function App() {
 
             {/* Страница магазина */}
             <Route path="shop" element={<ShopPage />} />
+            
+            {/* Страница отдельного товара */}
+            <Route path="shop/:id" element={<ProductPage />} />
 
             {/* Аккаунтная система и личный кабинет (наша часть) */}
             <Route path="profile" element={<AccountPage />} />

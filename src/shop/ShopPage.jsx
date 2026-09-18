@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { products } from '../data/products';
 
@@ -226,7 +227,8 @@ export function ShopPage() {
                     key={product.id} 
                     className="group cursor-pointer"
                   >
-                {/* Image Placeholder */}
+                    <Link to={`/shop/${product.id}`} className="block h-full">
+                      {/* Image Placeholder */}
                 <div className="relative w-full aspect-[4/5] bg-gray-100 rounded-lg mb-4 overflow-hidden shadow-sm transition-all duration-500 group-hover:shadow-md">
                   {/* Badge */}
                   {product.badge && (
@@ -251,6 +253,7 @@ export function ShopPage() {
                 <p className="text-[#A18A68] font-medium">
                   {product.price}
                 </p>
+                    </Link>
               </motion.div>
               ))
             ) : (
