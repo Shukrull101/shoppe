@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import Layout from './layout/Layout';
+import Layout from './layout/layout';
 import { AccountProvider, AccountPage, ForgotPasswordPage } from './account';
 
 export default function App() {
