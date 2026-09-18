@@ -58,6 +58,25 @@ export function ProductPage() {
   const [reviews, setReviews] = useState([]);
   const [reviewRating, setReviewRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
+
+  if (!product) {
+    return <div className="text-center py-20 text-2xl font-medium">Product not found</div>;
+  }
+
+  const isSoldOut = product.badge?.toLowerCase() === 'sold out';
+  
+  let originalPriceStr = product.price;
+  let discountedPriceStr = null;
+  
+  if (product.badge && product.badge.includes('%')) {
+    const discountMatch = product.badge.match(/\d+/);
+    if (discountMatch) {
+      const discountPercent = parseInt(discountMatch[0], 10);
+      const originalValue = parseFloat(product.price.replace(/[^0-9,.]/g, '').replace(',', '.'));
+      const newValue = originalValue * (1 - discountPercent / 100);
+      discountedPriceStr = `$ ${newValue.toFixed(2).replace('.', ',')}`;
+    }
+  }
   
   // Прокрутка наверх и загрузка отзывов при смене товара
   useEffect(() => {
@@ -151,7 +170,16 @@ export function ProductPage() {
           {/* Правая колонка - Информация о товаре */}
           <div className="w-full lg:w-1/2 pt-4">
             <h1 className="text-3xl font-medium mb-4">{product.title}</h1>
-            <p className="text-xl text-[#A18A68] font-medium mb-6">{product.price}</p>
+            <p className="text-xl font-medium mb-6 flex gap-4">
+              {discountedPriceStr ? (
+                <>
+                  <span className="text-gray-400 line-through">{originalPriceStr}</span>
+                  <span className="text-[#A18A68]">{discountedPriceStr}</span>
+                </>
+              ) : (
+                <span className="text-[#A18A68]">{originalPriceStr}</span>
+              )}
+            </p>
             
             {/* Рейтинг */}
             <div className="flex items-center gap-4 mb-8">
@@ -171,25 +199,37 @@ export function ProductPage() {
             </p>
 
             {/* Добавление в корзину */}
-            <div className="flex items-center gap-6 mb-12">
-              <div className="flex items-center border border-gray-200 rounded-sm">
+            {isSoldOut ? (
+              <div className="mb-12">
+                <p className="text-red-500 font-medium text-lg">Sorry, this item is currently out of stock.</p>
                 <button 
-                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="w-10 h-12 flex items-center justify-center text-gray-500 hover:text-black hover:bg-gray-50 transition-colors"
-                >-</button>
-                <span className="w-12 text-center text-[15px]">{quantity}</span>
-                <button 
-                  onClick={() => setQuantity(quantity + 1)}
-                  className="w-10 h-12 flex items-center justify-center text-gray-500 hover:text-black hover:bg-gray-50 transition-colors"
-                >+</button>
+                  disabled
+                  className="mt-4 flex-1 bg-gray-200 border border-gray-300 text-gray-500 h-12 px-8 text-sm uppercase tracking-wider font-medium rounded-sm cursor-not-allowed"
+                >
+                  Out of stock
+                </button>
               </div>
-              <button 
-                onClick={() => addToCart(product, quantity)}
-                className="flex-1 bg-white border border-black text-black h-12 text-sm uppercase tracking-wider font-medium hover:bg-black hover:text-white transition-colors rounded-sm"
-              >
-                Add to cart
-              </button>
-            </div>
+            ) : (
+              <div className="flex items-center gap-6 mb-12">
+                <div className="flex items-center border border-gray-200 rounded-sm">
+                  <button 
+                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                    className="w-10 h-12 flex items-center justify-center text-gray-500 hover:text-black hover:bg-gray-50 transition-colors"
+                  >-</button>
+                  <span className="w-12 text-center text-[15px]">{quantity}</span>
+                  <button 
+                    onClick={() => setQuantity(quantity + 1)}
+                    className="w-10 h-12 flex items-center justify-center text-gray-500 hover:text-black hover:bg-gray-50 transition-colors"
+                  >+</button>
+                </div>
+                <button 
+                  onClick={() => addToCart({ ...product, price: discountedPriceStr || product.price }, quantity)}
+                  className="flex-1 bg-white border border-black text-black h-12 text-sm uppercase tracking-wider font-medium hover:bg-black hover:text-white transition-colors rounded-sm"
+                >
+                  Add to cart
+                </button>
+              </div>
+            )}
 
             {/* Иконки и метаданные */}
             <div className="flex items-center gap-6 mb-10">

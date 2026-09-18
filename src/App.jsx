@@ -7,6 +7,7 @@ import { HomePage } from './home';
 import { ProductPage } from './product';
 import { CartProvider, CartDrawer, CartPage } from './cart';
 import { CheckoutPage, OrderConfirmationPage } from './checkout';
+import { BlogPage, BlogPostPage } from './blog';
 
 export default function App() {
   return (
@@ -31,6 +32,10 @@ export default function App() {
             <Route path="cart" element={<CartPage />} />
             <Route path="checkout" element={<CheckoutPage />} />
             <Route path="order-confirmation" element={<OrderConfirmationPage />} />
+
+            {/* Блог */}
+            <Route path="blog" element={<BlogPage />} />
+            <Route path="blog/:id" element={<BlogPostPage />} />
 
             {/* Аккаунтная система и личный кабинет (наша часть) */}
             <Route path="profile" element={<AccountPage />} />

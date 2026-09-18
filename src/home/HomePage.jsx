@@ -137,16 +137,20 @@ export function HomePage() {
                 <div className="absolute inset-0 bg-white/50 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-4 z-10">
                   <button 
                     onClick={(e) => { e.preventDefault(); addToCart(product, 1); }}
-                    className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-black hover:bg-black hover:text-white transition-colors shadow-md transform translate-y-4 group-hover:translate-y-0 duration-300 delay-75"
+                    className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-black hover:bg-black hover:text-white transition-all shadow-md transform translate-y-4 group-hover:translate-y-0 duration-300 group-hover:delay-75"
                   >
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="9" cy="21" r="1"></circle>
+                      <circle cx="20" cy="21" r="1"></circle>
+                      <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
                   </button>
-                  <button className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-black hover:bg-black hover:text-white transition-colors shadow-md transform translate-y-4 group-hover:translate-y-0 duration-300 delay-100">
+                  <button className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-black hover:bg-black hover:text-white transition-all shadow-md transform translate-y-4 group-hover:translate-y-0 duration-300 group-hover:delay-100">
                     <EyeIcon />
                   </button>
                   <button 
                     onClick={(e) => toggleLike(e, product.id)}
-                    className={`w-10 h-10 bg-white rounded-full flex items-center justify-center transition-colors shadow-md transform translate-y-4 group-hover:translate-y-0 duration-300 delay-150 ${likedItems[product.id] ? 'text-red-500' : 'text-black hover:bg-black hover:text-white'}`}
+                    className={`w-10 h-10 bg-white rounded-full flex items-center justify-center transition-all shadow-md transform translate-y-4 group-hover:translate-y-0 duration-300 group-hover:delay-150 ${likedItems[product.id] ? 'text-red-500' : 'text-black hover:bg-black hover:text-white'}`}
                   >
                     <HeartIcon filled={likedItems[product.id]} />
                   </button>
